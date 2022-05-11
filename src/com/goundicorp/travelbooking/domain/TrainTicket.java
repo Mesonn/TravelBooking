@@ -1,12 +1,14 @@
 package com.goundicorp.travelbooking.domain;
 
+import com.goundicorp.travelbooking.exceptions.InvalidTravelDurationException;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TrainTicket extends TravelTicket{
 
-    private Integer travelClass;
+    private TravelClass travelClass;
     private Integer carriageNumber;
     private Integer seatNumber;
 
@@ -14,18 +16,18 @@ public class TrainTicket extends TravelTicket{
         super();
     }
 
-    public TrainTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime, Integer travelClass, Integer carriageNumber, Integer seatNumber) {
+    public TrainTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime, TravelClass travelClass, Integer carriageNumber, Integer seatNumber) throws InvalidTravelDurationException {
         super(bookingRef, origin, destination, price, departureTime, arrivalTime);
         this.travelClass = travelClass;
         this.carriageNumber = carriageNumber;
         this.seatNumber = seatNumber;
     }
 
-    public Integer getTravelClass() {
+    public TravelClass getTravelClass() {
         return travelClass;
     }
 
-    public void setTravelClass(Integer travelClass) {
+    public void setTravelClass(TravelClass travelClass) {
         this.travelClass = travelClass;
     }
 
@@ -47,8 +49,8 @@ public class TrainTicket extends TravelTicket{
 
 
     public void upgrade(){
-        if(travelClass != 1){
-            travelClass = 1;
+        if(travelClass != TravelClass.FIRST){
+            travelClass = TravelClass.FIRST;
             System.out.println("you have been upgraded");
 
         }

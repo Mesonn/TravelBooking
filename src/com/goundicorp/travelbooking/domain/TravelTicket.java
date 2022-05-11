@@ -1,6 +1,9 @@
 package com.goundicorp.travelbooking.domain;
 
+import com.goundicorp.travelbooking.exceptions.InvalidTravelDurationException;
+
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,7 +17,11 @@ public abstract class TravelTicket {
 
     public TravelTicket(){}
 
-    public TravelTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime) {
+    public TravelTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime) throws InvalidTravelDurationException {
+        if(Duration.between(departureTime,arrivalTime).toSeconds() < 0){
+            throw new InvalidTravelDurationException("You cannot arrive before your depart");
+        }
+
         this.bookingRef = bookingRef;
         this.origin = origin;
         this.destination = destination;
@@ -48,6 +55,9 @@ public abstract class TravelTicket {
     }
 
     public BigDecimal getPrice() {
+        if (price == null){
+            return BigDecimal.ZERO;
+        }
         return price;
     }
 

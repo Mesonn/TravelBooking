@@ -1,12 +1,14 @@
 package com.goundicorp.travelbooking.domain;
 
+import com.goundicorp.travelbooking.exceptions.InvalidTravelDurationException;
+
 import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PlainTicket extends TravelTicket{
-    private Integer travelClass;
+    private TravelClass travelClass;
     private Integer seatNumber;
     private Integer stopOvers;
 
@@ -15,18 +17,18 @@ public class PlainTicket extends TravelTicket{
         super();
     }
 
-    public PlainTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime, Integer travelClass, Integer seatNumber, Integer stopOvers) {
+    public PlainTicket(long bookingRef, String origin, String destination, BigDecimal price, LocalDateTime departureTime, LocalDateTime arrivalTime, TravelClass travelClass, Integer seatNumber, Integer stopOvers) throws InvalidTravelDurationException {
         super(bookingRef, origin, destination, price, departureTime, arrivalTime);
         this.travelClass = travelClass;
         this.seatNumber = seatNumber;
         this.stopOvers = stopOvers;
     }
 
-    public Integer getTravelClass() {
+    public TravelClass getTravelClass() {
         return travelClass;
     }
 
-    public void setTravelClass(Integer travelClass) {
+    public void setTravelClass(TravelClass travelClass) {
         this.travelClass = travelClass;
     }
 
